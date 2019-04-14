@@ -1,0 +1,9 @@
+<launch>
+
+  <group ns="turtlesim1">
+    <node pkg="turtlesim" name="sim" type="turtlesim_node"/>
+
+    <node pkg="turtlesim" name="teleop" type="turtle_teleop_key" launch-prefix="gnome-terminal -e"/>
+  </group>
+</launch>
+

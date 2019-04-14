@@ -1,0 +1,11 @@
+<launch>
+
+<node pkg="turtlesim" type="turtlesim_node" name="simulated_turtle">
+    <remap from="turtle1/cmd_vel" to="myturtle/cmd_vel" />
+</node>
+
+<node pkg="rosbag" type="play" name="player" output="screen" args="--clock /home/madhur/catkin_ws/src/beginner_tutorials/bags/remapped_turtle.bag"/>
+
+</launch>
+
+
