@@ -6,8 +6,8 @@ from race.msg import pid_input
 
 kp = 14.0
 kd = 0.09
-servo_offset = 18.5	# zero correction offset in case servo is misaligned. 
-prev_error = 0.0 
+servo_offset = 18.5	# zero correction offset in case servo is misaligned.
+prev_error = 0.0
 vel_input = 25.0	# arbitrarily initialized. 25 is not a special value. This code can input desired velocity from the user.
 
 pub = rospy.Publisher('drive_parameters', drive_param, queue_size=1)
@@ -19,15 +19,16 @@ def control(data):
 	global kd
 
 	## Your code goes here
-	# 1. Scale the error 
+	# 1. Scale the error
 	# 2. Apply the PID equation on error to compute steering
 	# 3. Make sure the steering value is within bounds for talker.py
- 	
+
+
 
 	## END
 
 	msg = drive_param();
-	msg.velocity = vel_input	
+	msg.velocity = vel_input
 	msg.angle = angle
 	pub.publish(msg)
 
