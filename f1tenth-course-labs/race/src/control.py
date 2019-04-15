@@ -22,8 +22,15 @@ def control(data):
 	# 1. Scale the error
 	# 2. Apply the PID equation on error to compute steering
 	# 3. Make sure the steering value is within bounds for talker.py
+    v0 = kp*data.pid_error + kd*(prev_error-data.pid_error)
 
+    #TODO: check this equation (how to get steering angle and deal with servo_offset)
+    angle = 0 - v0 - servo_offset
 
+    if angle<-100:
+        angle = -100
+    if angle>100:
+        angle = 100
 
 	## END
 
