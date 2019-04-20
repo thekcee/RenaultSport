@@ -40,7 +40,7 @@ def callback(data):
     AB = b*math.cos(alpha)
 
     #assuming AC is distance from car to another wall at angle alpha
-    CD = AB +  getRange(data, math.degrees(alpha))
+    CD = AB +  getRange(data, math.degrees(alpha))*math.sin(alpha)
     error = desired_trajectory-CD
 
 	## END
