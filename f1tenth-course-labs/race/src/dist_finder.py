@@ -36,12 +36,11 @@ def callback(data):
 	swing = math.radians(theta)
 
 	## Your code goes here to compute alpha, AB, and CD..and finally the error.
-
-    alpha = math.atan((a*math.cos(theta)-b)/(a*math.sin(theta)))
+    alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
     AB = b*math.cos(alpha)
 
-    # assuming vel = velocity  st AC = time_inc*vel
-    CD = AB +  data.time_increment*vel
+    #assuming AC is distance from car to another wall at angle alpha
+    CD = AB +  getRange(data, math.degrees(alpha))
     error = desired_trajectory-CD
 
 	## END
