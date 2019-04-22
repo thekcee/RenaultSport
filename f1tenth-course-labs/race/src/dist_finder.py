@@ -25,7 +25,7 @@ def getRange(data,theta):
 ## Your code goes here
    	index = theta*(len(data.ranges)/240)
    	dist = data.ranges[int(index)]
-    	if math.isnan(dist) or dist < data.range_min:
+    if math.isnan(dist) or dist < data.range_min:
         	dist = data.range_min
 	elif dist > data.range_max:
 		dist = data.range_max
@@ -36,14 +36,13 @@ def callback(data):
 	a = getRange(data,theta)
 	b = getRange(data,0)	# Note that the 0 implies a horizontal ray..the actual angle for the LIDAR may be 30 degrees and not 0.
 	swing = math.radians(theta)
-
-	## Your code goes here to compute alpha, AB, and CD..and finally the error.
-    	alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-   	AB = b*math.cos(alpha)
+	
+    alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
+    AB = b*math.cos(alpha)
 
     #assuming AC is distance from car to another wall at angle alpha
-    	CD = AB +  getRange(data, math.degrees(alpha))*math.sin(alpha)
-    	error = desired_trajectory-CD
+    CD = AB +  getRange(data, math.degrees(alpha))*math.sin(alpha)
+    error = desired_trajectory-CD
 
 	## END
 
