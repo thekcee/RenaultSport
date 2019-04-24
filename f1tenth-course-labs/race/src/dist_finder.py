@@ -8,7 +8,7 @@ from race.msg import pid_input
 # Some useful variable declarations.
 angle_range = 240	# sensor angle range of the lidar
 car_length = 1.5	# distance (in m) that we project the car forward for correcting the error. You may want to play with this.
-desired_trajectory = 1	# distance from the wall (left or right - we cad define..but this is defined for right). You should try different values
+desired_trajectory = 0.75	# distance from the wall (left or right - we cad define..but this is defined for right). You should try different values
 vel = 15 		# this vel variable is not really used here.
 error = 0.0
 
@@ -25,24 +25,29 @@ def getRange(data,theta):
 ## Your code goes here
    	index = theta*(len(data.ranges)/240)
    	dist = data.ranges[int(index)]
-    if math.isnan(dist) or dist < data.range_min:
+    	if dist < data.range_min:
         	dist = data.range_min
-	elif dist > data.range_max:
+	elif math.isnan(dist) or dist > data.range_max:
 		dist = data.range_max
 	return dist
 
 def callback(data):
-	theta = 50;
+	theta = 100
 	a = getRange(data,theta)
-	b = getRange(data,0)	# Note that the 0 implies a horizontal ray..the actual angle for the LIDAR may be 30 degrees and not 0.
+	b = getRange(data, 35)	# Note that the 0 implies a horizontal ray..the actual angle for the LIDAR may be 30 degrees and not 0.
 	swing = math.radians(theta)
-	
-    alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
-    AB = b*math.cos(alpha)
 
+	## Your code goes here to compute alpha, AB, and CD..and finally the error.
+    	alpha = math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
+   	AB = b*math.cos(alpha)
+
+	AC = 1.5
+	AD = getRange(data, theta)
     #assuming AC is distance from car to another wall at angle alpha
-    CD = AB +  getRange(data, math.degrees(alpha))*math.sin(alpha)
-    error = desired_trajectory-CD
+    	#CD = AB +  (AC * math.sin(alpha))
+    	CD = AD * math.cos(math.radians(65))
+    	error = desired_trajectory-CD
+	rospy.loginfo('ab:' + str(AB) + ' cd:' + str(CD))
 
 	## END
 
